@@ -1,0 +1,6 @@
+/node_modules/
+/public/
+
+/npm-debug.log
+/ui_bundle
+/ui_bundle.gz
