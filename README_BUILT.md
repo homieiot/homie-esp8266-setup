@@ -7,7 +7,7 @@ UI to configure an ESP8266 loaded with an Homie firmware.
 
 ### Hosted version
 
-Open http://marvinroger.github.io/homie-esp8266-setup/ in your web browser.
+Open http://setup.homie-esp8266.marvinroger.fr/ in your web browser.
 
 ### Locally
 

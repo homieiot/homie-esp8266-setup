@@ -15,10 +15,13 @@ build:
         name: copy ui_bundle.gz
         code: cp ui_bundle.gz $WERCKER_OUTPUT_DIR
     - script:
-        name: add config.xml
+        name: copy config.xml
         code: cp config.xml $WERCKER_OUTPUT_DIR
     - script:
-        name: add README
+        name: copy CNAME
+        code: cp CNAME $WERCKER_OUTPUT_DIR
+    - script:
+        name: copy README
         code: cp README_BUILT.md $WERCKER_OUTPUT_DIR/README.md
     - script:
         name: bypass Jekyll
