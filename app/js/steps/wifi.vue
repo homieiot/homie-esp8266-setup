@@ -4,13 +4,13 @@
       Select the Wi-Fi network to connect to:
     </p>
 
-    <form v-on:submit.prevent="sendDone">
+    <form @submit.prevent="sendDone">
       <label class="label" for="wifi_network">Network</label>
       <p class="control">
         <span class="select">
           <select v-model="ssid_select" id="wifi_network">
             <option value="select">Select...</option>
-            <option v-for="network in formattedNetworks" v-bind:value="network">
+            <option v-for="network in formattedNetworks" :value="network">
               {{ network.ssid }} - {{ network.encryption }} ({{ network.signalQuality }}%)
             </option>
             <option value="other">Other/hidden network</option>
@@ -29,7 +29,7 @@
       <div v-if="typeof ssid_select === 'object' && ssid_select.encryption !== 'Open' || ssid_select === 'other'">
         <label class="label" for="wifi_password">Wi-Fi password</label>
         <p class="control is-grouped">
-          <input class="input" v-model="password" v-bind:type="passwordClearText ? 'text' : 'password'" id="wifi_password" placeholder="Password" maxLength="64" />
+          <input class="input" v-model="password" :type="passwordClearText ? 'text' : 'password'" id="wifi_password" placeholder="Password" maxLength="64" />
           <label class="checkbox">
             <input type="checkbox" v-model="passwordClearText" /> Show password
           </label>
@@ -39,7 +39,7 @@
       </div>
 
       <p class="control">
-        <button type="submit" v-bind:disabled="!formIsValid" class="button is-primary">Next</button>
+        <button type="submit" :disabled="!formIsValid" class="button is-primary">Next</button>
       </p>
     </form>
   </span>

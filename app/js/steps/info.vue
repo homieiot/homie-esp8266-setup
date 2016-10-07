@@ -37,7 +37,7 @@
         </li>
       </ul>
 
-      <a class="button is-primary" v-on:click="sendDone">Next</a>
+      <a class="button is-primary" @click="sendDone">Next</a>
     </span>
   </span>
 </template>

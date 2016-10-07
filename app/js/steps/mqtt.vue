@@ -4,7 +4,7 @@
       Enter the MQTT credentials.
     </p>
 
-    <form v-on:submit.prevent="sendDone">
+    <form @submit.prevent="sendDone">
       <label class="label" for="mqtt_broker_address">MQTT broker address</label>
       <p class="control">
         <input v-model="host" class="input" type="text" id="mqtt_broker_address" placeholder="IP or hostname" pattern="^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$|^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$" required />
@@ -38,7 +38,7 @@
 
         <label class="label" for="mqtt_password">MQTT password</label>
         <p class="control is-grouped">
-          <input class="input" v-model="password" v-bind:type="passwordClearText ? 'text' : 'password'" id="mqtt_password" placeholder="Password" />
+          <input class="input" v-model="password" :type="passwordClearText ? 'text' : 'password'" id="mqtt_password" placeholder="Password" />
           <label class="checkbox">
             <input type="checkbox" v-model="passwordClearText" /> Show password
           </label>
@@ -49,7 +49,7 @@
       </div>
 
       <p class="control">
-        <button type="submit" v-bind:disabled="!formIsValid" class="button is-primary">Next</button>
+        <button type="submit" :disabled="!formIsValid" class="button is-primary">Next</button>
       </p>
     </form>
   </span>

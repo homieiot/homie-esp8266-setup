@@ -2,14 +2,14 @@
   <span>
     <h1 class="title">Homie for ESP8266</h1>
     <h2 class="subtitle">Set up your device.</h2>
-    <progress-bar v-bind:current-step="currentStep" />
+    <progress-bar :current-step="currentStep" />
     <div class="content">
-      <connection-step v-on:done="goToNextStep" v-on:loading="setLoading" v-on:loaded="stopLoading" v-if="currentStep === 1" />
-      <info-step v-on:deviceInformation="receiveDeviceInformation" v-on:done="goToNextStep" v-on:loading="setLoading" v-on:loaded="stopLoading" v-if="currentStep === 2" />
-      <wifi-step v-on:wifiConfig="receiveWifiConfig" v-on:done="goToNextStep" v-on:loading="setLoading" v-on:loaded="stopLoading" v-if="currentStep === 3" />
-      <mqtt-step v-on:mqttConfig="receiveMqttConfig" v-on:done="goToNextStep" v-if="currentStep === 4" />
-      <settings-step v-bind:device-information="deviceInformation" v-on:settingsConfig="receiveSettingsConfig" v-on:done="goToNextStep" v-if="currentStep === 5" />
-      <sending-step v-bind:configuration="config" v-on:loading="setLoading" v-on:loaded="stopLoading" v-if="currentStep === 6" />
+      <connection-step @done="goToNextStep" @loading="setLoading" @loaded="stopLoading" v-if="currentStep === 1" />
+      <info-step @deviceInformation="receiveDeviceInformation" @done="goToNextStep" @loading="setLoading" @loaded="stopLoading" v-if="currentStep === 2" />
+      <wifi-step @wifiConfig="receiveWifiConfig" @done="goToNextStep" @loading="setLoading" @loaded="stopLoading" v-if="currentStep === 3" />
+      <mqtt-step @mqttConfig="receiveMqttConfig" @done="goToNextStep" v-if="currentStep === 4" />
+      <settings-step :device-information="deviceInformation" @settingsConfig="receiveSettingsConfig" @done="goToNextStep" v-if="currentStep === 5" />
+      <sending-step :configuration="config" @loading="setLoading" @loaded="stopLoading" v-if="currentStep === 6" />
 
       <div v-if="loading" class="notification">
         <span class="button is-loading">Loading</span> {{ loadingText }}

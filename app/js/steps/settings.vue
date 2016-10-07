@@ -4,7 +4,7 @@
       Configure the settings for your device.
     </p>
 
-    <form v-on:submit.prevent="sendDone">
+    <form @submit.prevent="sendDone">
       <label class="label" for="friendly_name">Friendly name</label>
       <p class="control">
         <input v-model="name" class="input" type="text" placeholder="My awesome device name" id="friendly_name" required />
@@ -31,19 +31,19 @@
         <template v-for="setting in deviceInformation.settings">
           <template v-if="setting.type === 'bool'">
             <p class="control">
-              <label class="checkbox" v-bind:for="'custom_setting_' + setting.name">
-                <input type="checkbox" v-model="customSettings[setting.name]" v-bind:id="'custom_setting_' + setting.name" /> {{ setting.description }}
+              <label class="checkbox" :for="'custom_setting_' + setting.name">
+                <input type="checkbox" v-model="customSettings[setting.name]" :id="'custom_setting_' + setting.name" /> {{ setting.description }}
               </label>
               <span class="help" v-html="setting.required ? 'Required.' : 'Optional. Defaults to <span class=\'tag\'>' + setting.default + '</span>.'"></span>
             </p>
           </template>
           <template v-else>
-            <label class="label" v-bind:for="'custom_setting_' + setting.name"><span class="icon is-small"><i v-bind:class="{ fa: true, 'fa-hashtag': setting.type === 'long' || setting.type === 'ulong' || setting.type === 'double', 'fa-font': setting.type === 'string' }"></i></span> {{ setting.type === 'double' ? '(float)' : '' }} {{ setting.type === 'ulong' ? '(unsigned)' : '' }} {{ setting.description }}</label>
+            <label class="label" :for="'custom_setting_' + setting.name"><span class="icon is-small"><i :class="{ fa: true, 'fa-hashtag': setting.type === 'long' || setting.type === 'ulong' || setting.type === 'double', 'fa-font': setting.type === 'string' }"></i></span> {{ setting.type === 'double' ? '(float)' : '' }} {{ setting.type === 'ulong' ? '(unsigned)' : '' }} {{ setting.description }}</label>
             <p class="control">
-              <input v-if="setting.type === 'ulong'" v-model="customSettings[setting.name]" class="input" type="number" step="1" min="0" max="4294967295" v-bind:id="'custom_setting_' + setting.name" />
-              <input v-if="setting.type === 'long'" v-model="customSettings[setting.name]" class="input" type="number" step="1" min="-2147483648" max="2147483647" v-bind:id="'custom_setting_' + setting.name" />
-              <input v-if="setting.type === 'double'" v-model="customSettings[setting.name]" class="input" type="number" step="any" v-bind:id="'custom_setting_' + setting.name" />
-              <input v-if="setting.type === 'string'" v-model="customSettings[setting.name]" class="input" type="text" v-bind:id="'custom_setting_' + setting.name" />
+              <input v-if="setting.type === 'ulong'" v-model="customSettings[setting.name]" class="input" type="number" step="1" min="0" max="4294967295" :id="'custom_setting_' + setting.name" />
+              <input v-if="setting.type === 'long'" v-model="customSettings[setting.name]" class="input" type="number" step="1" min="-2147483648" max="2147483647" :id="'custom_setting_' + setting.name" />
+              <input v-if="setting.type === 'double'" v-model="customSettings[setting.name]" class="input" type="number" step="any" :id="'custom_setting_' + setting.name" />
+              <input v-if="setting.type === 'string'" v-model="customSettings[setting.name]" class="input" type="text" :id="'custom_setting_' + setting.name" />
               <span class="help" v-html="setting.required ? 'Required.' : 'Optional. Defaults to <span class=\'tag\'>' + setting.default + '</span>.'"></span>
             </p>
           </template>
@@ -51,7 +51,7 @@
       </p>
 
       <p class="control">
-        <button type="submit" v-bind:disabled="!formIsValid" class="button is-primary">Next</button>
+        <button type="submit" :disabled="!formIsValid" class="button is-primary">Next</button>
       </p>
     </form>
   </span>
