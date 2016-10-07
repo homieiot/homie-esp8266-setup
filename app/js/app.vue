@@ -34,22 +34,7 @@ export default {
       loading: false,
       loadingText: '',
       currentStep: 1,
-      deviceInformation: {
-        'hardware_device_id': '1234abcd',
-        'homie_esp8266_version': '2.0.0',
-        firmware: {
-          name: 'smartlight',
-          version: '1.0.0'
-        },
-        nodes: [{ type: 'switch', id: 'light' }],
-        settings: [
-          { "name": "bool-setting", "description": "This is a boolean", "type": "bool", "required": false, "default": true },
-          { "name": "unsigned-long-setting", "description": "This is an unsigned long", "type": "ulong", "required": true },
-          { "name": "long-setting", "description": "This is a long", "type": "long", "required": false, "default": 123 },
-          { "name": "double-setting", "description": "This is a double", "type": "double", "required": true },
-          { "name": "string-setting", "description": "This is a string", "type": "string", "required": false, "default": "default value" }
-        ]
-      },
+      deviceInformation: {},
       config: {}
     }
   },
