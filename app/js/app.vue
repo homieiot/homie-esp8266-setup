@@ -77,6 +77,12 @@ export default {
 }
 </script>
 
+<style scoped>
+  h1, h2 {
+    text-align: center;
+  }
+</style>
+
 <style>
   html {
     background: #fff;
