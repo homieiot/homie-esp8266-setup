@@ -20,7 +20,7 @@
       <label class="label" for="homie_base_topic">Homie base topic</label>
       <p class="control">
         <input v-model="baseTopic" class="input" type="text" id="homie_base_topic" placeholder="Base topic" />
-        <span class="help">Optional. The default value is <span class="tag">devices/</span>.</span>
+        <span class="help">Optional. The default value is <span class="tag">homie/</span>.</span>
       </p>
 
       <p class="control">
