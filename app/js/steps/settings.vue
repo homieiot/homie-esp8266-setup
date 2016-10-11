@@ -7,13 +7,13 @@
     <form @submit.prevent="sendDone">
       <label class="label" for="friendly_name">Friendly name</label>
       <p class="control">
-        <input v-model="name" class="input" type="text" placeholder="My awesome device name" id="friendly_name" required />
+        <input v-model.trim="name" class="input" type="text" placeholder="My awesome device name" id="friendly_name" required />
         <span class="help">Required.</span>
       </p>
 
       <label class="label" for="device_id">Device ID</label>
       <p class="control">
-        <input v-model="deviceId" class="input" type="text" pattern="^(([a-z0-9]|[a-z0-9][a-z0-9\-]*[a-z0-9]))$" placeholder="the-device-id" id="device_id" />
+        <input v-model.trim="deviceId" class="input" type="text" pattern="^(([a-z0-9]|[a-z0-9][a-z0-9\-]*[a-z0-9]))$" placeholder="the-device-id" id="device_id" />
         <span class="help">Optional. The default value is the hardware device ID. MAY be composed of lowercase letters from <span class="tag">a</span> to <span class="tag">z</span>, numbers from <span class="tag">0</span> to <span class="tag">9</span>, and it MAY contain <span class="tag">-</span>, but MUST NOT start or end with a <span class="tag">-</span></span>
       </p>
 
@@ -40,10 +40,10 @@
           <template v-else>
             <label class="label" :for="'custom_setting_' + setting.name"><span class="icon is-small"><i :class="{ fa: true, 'fa-hashtag': setting.type === 'long' || setting.type === 'ulong' || setting.type === 'double', 'fa-font': setting.type === 'string' }"></i></span> {{ setting.type === 'double' ? '(float)' : '' }} {{ setting.type === 'ulong' ? '(unsigned)' : '' }} {{ setting.description }}</label>
             <p class="control">
-              <input v-if="setting.type === 'ulong'" v-model="customSettings[setting.name]" class="input" type="number" step="1" min="0" max="4294967295" :id="'custom_setting_' + setting.name" />
-              <input v-if="setting.type === 'long'" v-model="customSettings[setting.name]" class="input" type="number" step="1" min="-2147483648" max="2147483647" :id="'custom_setting_' + setting.name" />
-              <input v-if="setting.type === 'double'" v-model="customSettings[setting.name]" class="input" type="number" step="any" :id="'custom_setting_' + setting.name" />
-              <input v-if="setting.type === 'string'" v-model="customSettings[setting.name]" class="input" type="text" :id="'custom_setting_' + setting.name" />
+              <input v-if="setting.type === 'ulong'" v-model.number="customSettings[setting.name]" class="input" type="number" step="1" min="0" max="4294967295" :id="'custom_setting_' + setting.name" />
+              <input v-if="setting.type === 'long'" v-model.number="customSettings[setting.name]" class="input" type="number" step="1" min="-2147483648" max="2147483647" :id="'custom_setting_' + setting.name" />
+              <input v-if="setting.type === 'double'" v-model.number="customSettings[setting.name]" class="input" type="number" step="any" :id="'custom_setting_' + setting.name" />
+              <input v-if="setting.type === 'string'" v-model.trim="customSettings[setting.name]" class="input" type="text" :id="'custom_setting_' + setting.name" />
               <span class="help" v-html="setting.required ? 'Required.' : 'Optional. Defaults to <span class=\'tag\'>' + setting.default + '</span>.'"></span>
             </p>
           </template>

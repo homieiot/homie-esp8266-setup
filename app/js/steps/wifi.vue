@@ -21,7 +21,7 @@
       <div v-if="ssid_select === 'other'">
         <label class="label" for="wifi_ssid">Wi-Fi SSID</label>
         <p class="control">
-          <input class="input" v-model="ssid_input" id="wifi_ssid" type="text" placeholder="SSID" maxLength="32" required />
+          <input class="input" v-model.trim="ssid_input" id="wifi_ssid" type="text" placeholder="SSID" maxLength="32" required />
           <span class="help">Required.</span>
         </p>
       </div>
@@ -29,7 +29,7 @@
       <div v-if="typeof ssid_select === 'object' && ssid_select.encryption !== 'Open' || ssid_select === 'other'">
         <label class="label" for="wifi_password">Wi-Fi password</label>
         <p class="control is-grouped">
-          <input class="input" v-model="password" :type="passwordClearText ? 'text' : 'password'" id="wifi_password" placeholder="Password" maxLength="64" />
+          <input class="input" v-model.trim="password" :type="passwordClearText ? 'text' : 'password'" id="wifi_password" placeholder="Password" maxLength="64" />
           <label class="checkbox">
             <input type="checkbox" v-model="passwordClearText" /> Show password
           </label>
