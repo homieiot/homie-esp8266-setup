@@ -91,9 +91,9 @@ export default {
 
       mqtt.auth = false
       if (this.auth) {
-        creds.auth = true
-        creds.username = this.username
-        creds.password = this.password
+        mqtt.auth = true
+        mqtt.username = this.username
+        mqtt.password = this.password
       }
 
       this.$emit('mqttConfig', mqtt)
