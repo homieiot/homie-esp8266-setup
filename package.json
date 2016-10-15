@@ -45,7 +45,7 @@
     "run-sequence": "^1.1.5",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "vue": "^2.0.1",
+    "vue": "^2.0.3",
     "vueify": "^9.2.4"
   }
 }
