@@ -1,5 +1,5 @@
 <template>
-  <p>Connect to your device Wi-Fi AP. If the AP is named <strong>Homie-1234abcd</strong>, the password is <strong>1234abcd</strong>.</p>
+  <p>Connect to your device Wi-Fi AP. If the AP is named <strong>Homie-123456abcdef</strong>, the password is <strong>123456abcdef</strong>.</p>
 </template>
 
 <script>
