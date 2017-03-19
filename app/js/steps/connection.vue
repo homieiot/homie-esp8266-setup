@@ -1,5 +1,8 @@
 <template>
-  <p>Connect to your device Wi-Fi AP. It should be named something like <strong>Homie-123456abcdef</strong>.</p>
+  <p>
+    Connect to your device Wi-Fi AP. It should be named something like <strong>Homie-123456abcdef</strong>.
+    Note this configurator is only for Homie for ESP8266 v2. The v1 configurator is available <a href="http://marvinroger.github.io/homie-esp8266">here</a>.
+  </p>
 </template>
 
 <script>
