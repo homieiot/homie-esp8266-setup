@@ -60,7 +60,6 @@
 </template>
 
 <script>
-
 export default {
   data () {
     const customSettings = {}
@@ -75,13 +74,13 @@ export default {
       customSettings
     }
   },
-  props: ["deviceInformation"],
+  props: ['deviceInformation'],
   computed: {
     formIsValid: function () {
       if (!this.name) return false
 
       for (let originalSetting of this.deviceInformation.settings) {
-        if (originalSetting.required && !this.customSettings[originalSetting.name]) return false
+        if (originalSetting.required && this.customSettings[originalSetting.name] === '') return false
       }
 
       return true
@@ -95,7 +94,7 @@ export default {
       if (this.deviceId) settings['device_id'] = this.deviceId
 
       for (let providedSettingName of Object.keys(this.customSettings)) {
-        let originalSettingObject;
+        let originalSettingObject
         for (let settingObject of this.deviceInformation.settings) {
           if (settingObject.name === providedSettingName) {
             originalSettingObject = settingObject
