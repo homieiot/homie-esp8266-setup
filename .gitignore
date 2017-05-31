@@ -1,5 +1,5 @@
 /node_modules/
-/public/
+/dist/
 
 /npm-debug.log
 /ui_bundle

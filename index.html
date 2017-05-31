@@ -7,10 +7,18 @@
 
     <title>Set up your Homie for ESP8266 device</title>
 
-    <link inline rel="icon" type="image/x-icon" href="public/favicon.ico">
+    <link inline rel="icon" type="image/x-icon" href="favicon.ico">
 
-    <link inline href="public/vendor/font-awesome/icons.min.css" rel="stylesheet">
-    <link inline href="public/vendor/bulma/css/bulma.min.css" rel="stylesheet">
+    <link inline href="vendor/font-awesome/icons.min.css" rel="stylesheet">
+    <link inline href="vendor/bulma/css/bulma.min.css" rel="stylesheet">
+    
+    <% for (var chunk of webpack.chunks) {
+         for (var file of chunk.files) {
+           if (file.match(/\.(js|css)$/)) { %>
+             <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>">
+    <%     }
+         }
+      } %>
 
     <style>
       .container {
@@ -28,12 +36,10 @@
 
   <body>
     <div class="container">
-      <img inline src="public/img/logo.png" alt="Homie for ESP8266">
+      <img src="img/logo.png" alt="Homie for ESP8266">
       <br/><br/>
       <div id="app">
       </div>
     </div>
-
-    <script inline src="public/js/bundle.min.js"></script>
   </body>
 </html>

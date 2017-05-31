@@ -1,31 +1,27 @@
-box: node:6
+box: node:7
 build:
   steps:
-    - npm-install
     - script:
-        name: build site
-        code: npm run build
+        name: set Yarn cache
+        code: yarn config set cache-folder $WERCKER_CACHE_DIR/yarn
     - script:
-        name: copy public directory
-        code: cp -r public/ $WERCKER_OUTPUT_DIR
+        name: install dependencies
+        code: yarn
     - script:
-        name: copy index.html
-        code: cp index.html $WERCKER_OUTPUT_DIR
+        name: build app
+        code: yarn build
     - script:
-        name: copy ui_bundle.gz
-        code: cp ui_bundle.gz $WERCKER_OUTPUT_DIR
+        name: generate UI bundle
+        code: yarn generate-ui-bundle
     - script:
-        name: copy config.xml
-        code: cp config.xml $WERCKER_OUTPUT_DIR
-    - script:
-        name: copy CNAME
-        code: cp CNAME $WERCKER_OUTPUT_DIR
-    - script:
-        name: copy README
-        code: cp README_BUILT.md $WERCKER_OUTPUT_DIR/README.md
-    - script:
-        name: bypass Jekyll
-        code: touch $WERCKER_OUTPUT_DIR/.nojekyll
+        name: copy files to deployable
+        code: |
+          cp -a ./dist/. $WERCKER_OUTPUT_DIR
+          cp ./ui_bundle.gz $WERCKER_OUTPUT_DIR
+          cp config.xml $WERCKER_OUTPUT_DIR
+          cp CNAME $WERCKER_OUTPUT_DIR
+          cp README_BUILT.md $WERCKER_OUTPUT_DIR/README.md
+          touch $WERCKER_OUTPUT_DIR/.nojekyll
 
 deploy:
   steps:
