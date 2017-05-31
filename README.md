@@ -9,5 +9,4 @@ UI to configure an ESP8266 loaded with an Homie firmware. This branch is automat
 
 Contributions are very welcome!
 
-To build assets, just run `npm run dev`.
-This will build the public directory, and watch for changes in the `app` folder.
+To develop, just run `npm run dev` and open `127.0.0.1:4000`.
