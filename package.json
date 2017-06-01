@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "poi",
     "build": "poi build",
-    "generate-ui-bundle": "inliner --nocompress ./dist/index.html > ui_bundle && zopfli ./ui_bundle"
+    "generate-ui-bundle": "inliner --nocompress ./dist/index.html > ui_bundle && zopfli ./ui_bundle",
+    "ci_generate-ui-bundle": "script --quiet --flush --command \"yarn generate-ui-bundle\""
   },
   "author": {
     "name": "Marvin Roger",

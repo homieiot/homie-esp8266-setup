@@ -12,7 +12,7 @@ build:
         code: yarn build
     - script:
         name: generate UI bundle
-        code: yarn generate-ui-bundle
+        code: yarn ci_generate-ui-bundle
     - script:
         name: copy files to deployable
         code: |
