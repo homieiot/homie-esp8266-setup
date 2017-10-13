@@ -7,7 +7,7 @@
     "build": "poi build",
     "generate-ui-bundle": "npm run generate-ui-bundle:inline && npm run generate-ui-bundle:strip-preload && npm run generate-ui-bundle:compress",
     "generate-ui-bundle:inline": "inliner --nocompress ./dist/index.html > ui_bundle",
-    "generate-ui-bundle:strip-preload": "replace-in-file \"/<link rel=\"\"preload\"\" href=\"\".+\"\" as=\"\".+\"\">/\" \"\" ./ui_bundle --isRegex",
+    "generate-ui-bundle:strip-preload": "replace-in-file \"/<link rel=\\\"preload\\\" href=\\\".+\\\" as=\\\".+\\\">/\" \"\" ./ui_bundle --isRegex",
     "generate-ui-bundle:compress": "zopfli ./ui_bundle",
     "ci_generate-ui-bundle": "script --quiet --flush --command \"yarn generate-ui-bundle\""
   },
