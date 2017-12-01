@@ -18,7 +18,7 @@ build:
         code: |
           cp -a ./dist/. $WERCKER_OUTPUT_DIR
           cp ./ui_bundle.gz $WERCKER_OUTPUT_DIR
-          cp ./ui_bundle.html $WERCKER_OUTPUT_DIR/ui_bundle.html
+          cp ./ui_bundle $WERCKER_OUTPUT_DIR/ui_bundle.html
           cp config.xml $WERCKER_OUTPUT_DIR
           cp README_BUILT.md $WERCKER_OUTPUT_DIR/README.md
           touch $WERCKER_OUTPUT_DIR/.nojekyll
