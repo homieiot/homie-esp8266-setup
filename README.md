@@ -9,4 +9,4 @@ UI to configure an ESP8266 loaded with an Homie firmware. This branch is automat
 
 Contributions are very welcome!
 
-To develop, just run `npm run dev` and open `127.0.0.1:4000`.
+To develop, just run `npm install; npm run dev` and open `127.0.0.1:4000`.
