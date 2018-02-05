@@ -1,0 +1,56 @@
+// Import CSS
+//@import "../assets/icons.min.css";
+//@import "~vue-material-design-icons/styles";
+
+// Import the rest of Bulma
+@import "./variables";
+//@import "~bulma/bulma";
+@import "~bulma/sass/utilities/_all";
+@import "~bulma/sass/base/_all";
+@import "~bulma/sass/layout/section";
+@import "~bulma/sass/elements/button";
+@import "~bulma/sass/elements/container";
+@import "~bulma/sass/elements/content";
+@import "~bulma/sass/elements/icon";
+@import "~bulma/sass/elements/table";
+@import "~bulma/sass/elements/notification";
+@import "~bulma/sass/elements/title";
+@import "~bulma/sass/elements/form";
+@import "~bulma/sass/elements/tag";
+@import "~bulma/sass/components/dropdown";
+@import "~bulma/sass/components/tabs";
+//@import "~bulma/sass/grid/columns";
+
+
+// Custom
+html {
+  background: #fff;
+}
+
+b {
+  font-weight: bold;
+}
+
+img.center{
+  display: block;
+  margin: auto;
+}
+img.logo{
+  margin-bottom: 20px;
+}
+
+// Icon Styles
+.material-design-icon {
+  display: inline-flex;
+  align-self: center;
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  > .material-design-icon__svg {
+    fill: currentColor;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+}

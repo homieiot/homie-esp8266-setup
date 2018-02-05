@@ -1,0 +1,14 @@
+// Import the initial variables
+@import "~bulma/sass/utilities/functions";
+@import "~bulma/sass/utilities/initial-variables";
+
+// Set the derived variables
+$body-size: 14px;
+$family-primary: "Helvetica Neue","Helvetica","Arial",sans-serif;
+$primary: #e74c3c; //#ce3323
+$primary-invert: findColorInvert($primary);
+$tabs-link-active-color: $primary;
+$tabs-link-active-border-bottom-color: $tabs-link-active-color;
+
+// Import the derived variables
+@import "~bulma/sass/utilities/derived-variables";
