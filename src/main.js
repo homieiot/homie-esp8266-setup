@@ -3,7 +3,7 @@ import './components/utils/icons'
 import Vue from 'vue'
 import App from './components/App'
 
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 
 /* eslint-disable no-new */
 new Vue({
@@ -13,7 +13,6 @@ new Vue({
 
 // favicon
 import favicon from './assets/favicon.png'
-import icons from './components/utils/icons';
 (function () {
   var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
   link.type = 'image/x-icon';

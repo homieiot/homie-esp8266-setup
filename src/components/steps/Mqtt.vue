@@ -28,7 +28,6 @@
           <input v-model="auth" type="checkbox" /> Use MQTT authentication
         </label>
       </p>
-
       <div v-if="auth">
         <label class="label" for="mqtt_username">MQTT username</label>
         <p class="control">
@@ -38,16 +37,23 @@
 
         <label class="label" for="mqtt_password">MQTT password</label>
         <p class="control is-grouped">
-          <!-- v-model does not support dynamic :type -->
-          <input v-if="passwordClearText" type="text" class="input" v-model.trim="password" id="mqtt_password" placeholder="Password" />
-          <input v-else type="password" class="input" v-model.trim="password" id="mqtt_password" placeholder="Password" />
-          <label class="checkbox">
-            <input type="checkbox" v-model="passwordClearText" /> Show password
-          </label>
+          <input :type="passwordClearText?'text':'password'" class="input" v-model.trim="password" id="mqtt_password" placeholder="Password" required />
+          <label class="checkbox"><input type="checkbox" v-model="passwordClearText" /> Show password</label>
+          <span class="help">Required.</span>
         </p>
-        <span class="help">Required.</span>
-
         <br/>
+      </div>
+
+      <p class="control">
+        <label class="checkbox"><input v-model="ssl" type="checkbox" /> Use MQTT TLS (SSL)</label>
+      </p>
+      <div v-if="ssl">
+        <label class="label" for="mqtt_username">MQTT SSL Certificate Fingerprint</label>
+        <p class="control">
+          <input v-model.trim="ssl_fingerprint" class="input" type="text" id="mqtt_ssl_fingerprint" placeholder="SSL Fingerprint" maxlength="40" />
+          <span class="help">Optional. SHA1 Fingerprint (40 hex char)</span>
+        </p>
+        <br />
       </div>
 
       <p class="control">
@@ -58,6 +64,8 @@
 </template>
 
 <script>
+import { KEEP } from "../../constants";
+
 export default {
   data() {
     return {
@@ -67,38 +75,57 @@ export default {
       baseTopic: null,
       auth: false,
       username: null,
-      password: null
+      password: null,
+      ssl: false,
+      ssl_fingerprint: null
     };
   },
+  props: ["currentConfig"],
   computed: {
     formIsValid: function() {
-      if (!this.host) return false;
-      if (!this.port) return false;
-
+      if (!this.host || !this.port) return false;
       if (this.auth) {
-        if (!this.username) return false;
-        if (!this.password) return false;
+        if (!this.username || !this.password) return false;
       }
-
       return true;
     }
+  },
+  mounted() {
+    this.loadCurrentConfig();
   },
   methods: {
     sendDone: function() {
       const mqtt = {};
       mqtt.host = this.host;
       mqtt.port = this.port;
-      if (this.baseTopic) mqtt["base_topic"] = this.baseTopic;
+      if (this.baseTopic) mqtt.base_topic = this.baseTopic;
 
-      mqtt.auth = false;
       if (this.auth) {
-        mqtt.auth = true;
+        mqtt.auth = this.auth;
         mqtt.username = this.username;
         mqtt.password = this.password;
       }
 
+      if (this.ssl) {
+        mqtt.ssl = this.ssl;
+        if (this.ssl_fingerprint) mqtt.ssl_fingerprint = this.ssl_fingerprint;
+      }
+
       this.$emit("mqttConfig", mqtt);
       this.$emit("done");
+    },
+    loadCurrentConfig: function() {
+      if (this.currentConfig) {
+        this.host = this.currentConfig.host;
+        this.port = this.currentConfig.port;
+        this.baseTopic = this.currentConfig.base_topic;
+        this.auth = this.currentConfig.auth;
+        this.username = this.currentConfig.username || KEEP;
+        this.password = this.currentConfig.password || KEEP;
+        if (this.password === KEEP) this.passwordClearText = true;
+        this.ssl = this.currentConfig.ssl;
+        this.ssl_fingerprint = this.currentConfig.ssl_fingerprint;
+      }
     }
   }
 };

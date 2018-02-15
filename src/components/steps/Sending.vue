@@ -25,6 +25,11 @@ export default {
   props: ["configuration"],
   mounted() {
     this.$emit("loading", "Sending configuration to the device...");
+    // TODO: if has current config: 
+    // if in new = KEEP -> remove prop
+    // if in current but not in new -> add prop as null to remove it from config
+    // if in new but not in currnt -> add new prop to be ser in the config
+    // if in both -> overite config value eg ^
     axios
       .put(`${API_URL}/config`, this.configuration)
       .then(res => {

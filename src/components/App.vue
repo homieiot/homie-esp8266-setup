@@ -8,8 +8,8 @@
       <div class="content">
         <connection-step @done="goToNextStep" @loading="setLoading" @loaded="stopLoading" v-if="currentStep === 1" />
         <info-step @done="goToNextStep" @loading="setLoading" @loaded="stopLoading" @deviceInformation="receiveDeviceInformation" @deviceConfig="receiveDeviceConfig" v-if="currentStep === 2" />
-        <wifi-step @done="goToNextStep" @loading="setLoading" @loaded="stopLoading"  @wifiConfig="receiveWifiConfig" v-if="currentStep === 3" />
-        <mqtt-step  @done="goToNextStep" @mqttConfig="receiveMqttConfig" v-if="currentStep === 4" />
+        <wifi-step :currentConfig="deviceConfig.wifi" @done="goToNextStep" @loading="setLoading" @loaded="stopLoading"  @wifiConfig="receiveWifiConfig" v-if="currentStep === 3" />
+        <mqtt-step :currentConfig="deviceConfig.mqtt" @done="goToNextStep" @mqttConfig="receiveMqttConfig" v-if="currentStep === 4" />
         <settings-step :device-information="deviceInformation" @done="goToNextStep" @settingsConfig="receiveSettingsConfig" v-if="currentStep === 5" />
         <sending-step :configuration="config" @loading="setLoading" @loaded="stopLoading" v-if="currentStep === 6" />
 
@@ -63,9 +63,11 @@ export default {
     },
     receiveWifiConfig: function(config) {
       this.config.wifi = config;
+      console.log(config);
     },
     receiveMqttConfig: function(config) {
       this.config.mqtt = config;
+      console.log(config);
     },
     receiveSettingsConfig: function(config) {
       this.config.name = config.name;
@@ -99,5 +101,9 @@ h2 {
 .notification .button.is-loading {
   background: transparent;
   border: none;
+}
+
+div.container{
+  max-width: 600px;
 }
 </style>
