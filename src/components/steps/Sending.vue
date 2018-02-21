@@ -4,16 +4,20 @@
       The configuration was sent. Your device will reboot. You can close this page.
     </div>
     <div v-else class="notification is-danger">
-      There was an error while sending the configuration: {{ apiResponse.error }}
-      <br />
-      Please retry or report if it looks like a bug.
+      <p>There was an error while sending the configuration:</p>
+      <p>{{ apiResponse.error }}</p>
+      <p>Please retry or report if it looks like a bug.</p>
     </div>
+    <p class="control">
+      <button class="button is-primary" v-on:click="sendConfig">Retry</button>
+    </p>
   </span>
 </template>
 
 <script>
 import axios from "axios";
 import { API_URL } from "../../constants";
+import buildPatchConfig from "../utils/buildPatchConfig";
 
 export default {
   data() {
@@ -22,27 +26,59 @@ export default {
       apiResponse: null
     };
   },
-  props: ["configuration"],
+  props: ["currentConfig", "newConfig"],
   mounted() {
-    this.$emit("loading", "Sending configuration to the device...");
-    // TODO: if has current config: 
-    // if in new = KEEP -> remove prop
-    // if in current but not in new -> add prop as null to remove it from config
-    // if in new but not in currnt -> add new prop to be ser in the config
-    // if in both -> overite config value eg ^
-    axios
-      .put(`${API_URL}/config`, this.configuration)
-      .then(res => {
-        this.$emit("loaded");
-        this.apiResponse = res.data;
-        this.loading = false;
-      })
-      .catch(err => {
-        this.$emit("loaded");
-        if (err.response) this.apiResponse = err.response.data;
-        else this.apiResponse = { error: err.message };
-        this.loading = false;
-      });
+    this.sendConfig();
+  },
+  methods: {
+    sendConfig: function() {
+      this.$emit("loading", "Sending configuration to the device...");
+      this.loading = true;
+      console.log("send");
+
+      let isPUT = true;
+      let path = "/config";
+      let config;
+      if (this.currentConfig) {
+        isPUT = false;
+        path = "/config/patch";
+        config = buildPatchConfig(this.currentConfig, this.newConfig);
+      } else {
+        config = this.newConfig;
+      }
+      if (config) {
+        this.callSetConfigAPI(path, config, isPUT);
+      } else {
+        this.onError("No Changes were made.");
+      }
+    },
+    callSetConfigAPI: function(path, config, isPUT = true) {
+      axios
+        .request({
+          method: isPUT ? "PUT" : "POST",
+          url: path,
+          baseURL: API_URL,
+          data: config
+        })
+        .then(res => {
+          this.$emit("loaded");
+          this.apiResponse = res.data;
+          this.loading = false;
+        })
+        .catch(err => {
+          if (err.response) this.onError(err.response.data);
+          else this.onError({ error: err.message });
+        });
+    },
+    onError: function(error) {
+      this.$emit("loaded");
+      if (typeof error === "object") {
+        this.apiResponse = error;
+      } else {
+        this.apiResponse = { error };
+      }
+      this.loading = false;
+    }
   }
 };
 </script>

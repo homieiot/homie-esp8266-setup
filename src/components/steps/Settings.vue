@@ -30,24 +30,29 @@
         <p>
           <h3>Custom settings</h3>
           <template v-for="setting in deviceInformation.settings">
-            <template v-if="setting.type === 'bool'">
-              <p class="control">
-                <label class="checkbox" :for="'custom_setting_' + setting.name">
-                  <input type="checkbox" v-model="customSettings[setting.name]" :id="'custom_setting_' + setting.name" /> {{ setting.description }}
-                </label>
-                <span class="help" v-html="setting.required ? 'Required.' : 'Optional. Defaults to <span class=\'tag\'>' + setting.default + '</span>.'"></span>
-              </p>
-            </template>
-            <template v-else>
-              <label class="label" :for="'custom_setting_' + setting.name"><span class="icon is-small"><i :class="{ fa: true, 'fa-hashtag': setting.type === 'long' || setting.type === 'ulong' || setting.type === 'double', 'fa-font': setting.type === 'string' }"></i></span> {{ setting.type === 'double' ? '(float)' : '' }} {{ setting.type === 'ulong' ? '(unsigned)' : '' }} {{ setting.description }}</label>
-              <p class="control">
-                <input v-if="setting.type === 'ulong'" v-model.number="customSettings[setting.name]" class="input" type="number" step="1" min="0" max="4294967295" :id="'custom_setting_' + setting.name" />
-                <input v-if="setting.type === 'long'" v-model.number="customSettings[setting.name]" class="input" type="number" step="1" min="-2147483648" max="2147483647" :id="'custom_setting_' + setting.name" />
-                <input v-if="setting.type === 'double'" v-model.number="customSettings[setting.name]" class="input" type="number" step="any" :id="'custom_setting_' + setting.name" />
-                <input v-if="setting.type === 'string'" v-model.trim="customSettings[setting.name]" class="input" type="text" :id="'custom_setting_' + setting.name" />
-                <span class="help" v-html="setting.required ? 'Required.' : 'Optional. Defaults to <span class=\'tag\'>' + setting.default + '</span>.'"></span>
-              </p>
-            </template>
+            <div v-bind:key="setting.name">
+              <template v-if="setting.type === 'bool'">
+                <p class="control">
+                  <label class="checkbox" :for="'custom_setting_' + setting.name">
+                    <input type="checkbox" v-model="customSettings[setting.name]" :id="'custom_setting_' + setting.name" /> {{ setting.description }}
+                  </label>
+                  <span class="help" v-html="setting.required ? 'Required.' : 'Optional. Defaults to <span class=\'tag\'>' + setting.default + '</span>.'"></span>
+                </p>
+              </template>
+              <template v-else>
+                <label class="label" :for="'custom_setting_' + setting.name">
+                  <span class="icon is-small"><i :class="{ fa: true, 'fa-hashtag': setting.type === 'long' || setting.type === 'ulong' || setting.type === 'double', 'fa-font': setting.type === 'string' }"></i></span>
+                  {{ setting.type === 'double' ? '(float)' : '' }} {{ setting.type === 'ulong' ? '(unsigned)' : '' }} {{ setting.description }} [{{ setting.name }}]
+                  </label>
+                <p class="control">
+                  <input v-if="setting.type === 'ulong'" v-model.number="customSettings[setting.name]" class="input" type="number" step="1" min="0" max="4294967295" :id="'custom_setting_' + setting.name" />
+                  <input v-if="setting.type === 'long'" v-model.number="customSettings[setting.name]" class="input" type="number" step="1" min="-2147483648" max="2147483647" :id="'custom_setting_' + setting.name" />
+                  <input v-if="setting.type === 'double'" v-model.number="customSettings[setting.name]" class="input" type="number" step="any" :id="'custom_setting_' + setting.name" />
+                  <input v-if="setting.type === 'string'" v-model.trim="customSettings[setting.name]" class="input" type="text" :id="'custom_setting_' + setting.name" />
+                  <span class="help" v-html="setting.required ? 'Required.' : 'Optional. Defaults to <span class=\'tag\'>' + setting.default + '</span>.'"></span>
+                </p>
+              </template>
+            </div>
           </template>
         </p>
       </template>
@@ -74,7 +79,7 @@ export default {
       customSettings
     };
   },
-  props: ["deviceInformation"],
+  props: ["currentConfig", "deviceInformation"],
   computed: {
     formIsValid: function() {
       if (!this.name) return false;
@@ -82,7 +87,7 @@ export default {
       for (let originalSetting of this.deviceInformation.settings) {
         if (
           originalSetting.required &&
-          this.customSettings[originalSetting.name] === ""
+          !this.customSettings[originalSetting.name]
         )
           return false;
       }
@@ -90,7 +95,17 @@ export default {
       return true;
     }
   },
+  mounted() {
+    this.loadCurrentConfig();
+  },
   methods: {
+    findSetting: function(name) {
+      for (let settingObject of this.deviceInformation.settings) {
+        if (settingObject.name === name) {
+          return settingObject;
+        }
+      }
+    },
     sendDone: function() {
       const settings = { settings: {} };
       settings.name = this.name;
@@ -98,27 +113,27 @@ export default {
       if (this.deviceId) settings["device_id"] = this.deviceId;
 
       for (let providedSettingName of Object.keys(this.customSettings)) {
-        let originalSettingObject;
-        for (let settingObject of this.deviceInformation.settings) {
-          if (settingObject.name === providedSettingName) {
-            originalSettingObject = settingObject;
-            break;
-          }
-        }
-
+        let originalSettingObject = this.findSetting(providedSettingName);
         if (
           originalSettingObject.required ||
-          originalSettingObject.default !==
-            this.customSettings[providedSettingName]
+          originalSettingObject.default !== this.customSettings[providedSettingName]
         ) {
-          settings.settings[providedSettingName] = this.customSettings[
-            providedSettingName
-          ];
+          settings.settings[providedSettingName] = this.customSettings[providedSettingName];
         }
       }
 
       this.$emit("settingsConfig", settings);
       this.$emit("done");
+    },
+    loadCurrentConfig: function() {
+      if (this.currentConfig) {
+        this.name = this.currentConfig.name;
+        this.deviceId = this.currentConfig.device_id;
+        if (this.currentConfig.ota) this.ota = this.currentConfig.ota.enabled;
+        for (let name of Object.keys(this.currentConfig.settings)) {
+          if (this.currentConfig.settings[name]) this.customSettings[name] = this.currentConfig.settings[name];
+        }
+      }
     }
   }
 };

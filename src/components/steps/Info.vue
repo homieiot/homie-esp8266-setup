@@ -95,7 +95,7 @@
 
 <script>
 import axios from "axios";
-import { API_URL } from "../../constants";
+import { API_URL, KEEP } from "../../constants";
 import InfoItem from "../utils/InfoItem.vue";
 
 export default {

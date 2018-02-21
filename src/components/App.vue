@@ -10,9 +10,8 @@
         <info-step @done="goToNextStep" @loading="setLoading" @loaded="stopLoading" @deviceInformation="receiveDeviceInformation" @deviceConfig="receiveDeviceConfig" v-if="currentStep === 2" />
         <wifi-step :currentConfig="deviceConfig.wifi" @done="goToNextStep" @loading="setLoading" @loaded="stopLoading"  @wifiConfig="receiveWifiConfig" v-if="currentStep === 3" />
         <mqtt-step :currentConfig="deviceConfig.mqtt" @done="goToNextStep" @mqttConfig="receiveMqttConfig" v-if="currentStep === 4" />
-        <settings-step :device-information="deviceInformation" @done="goToNextStep" @settingsConfig="receiveSettingsConfig" v-if="currentStep === 5" />
-        <sending-step :configuration="config" @loading="setLoading" @loaded="stopLoading" v-if="currentStep === 6" />
-
+        <settings-step :currentConfig="deviceConfig" :device-information="deviceInformation" @done="goToNextStep" @settingsConfig="receiveSettingsConfig" v-if="currentStep === 5" />
+        <sending-step :currentConfig="deviceConfig" :newConfig="config" @loading="setLoading" @loaded="stopLoading" v-if="currentStep === 6" />
         <div v-if="loading" class="notification">
           <span class="button is-loading ">Loading</span> {{ loadingText }}
         </div>
@@ -57,9 +56,11 @@ export default {
     },
     receiveDeviceInformation: function(deviceInformation) {
       this.deviceInformation = deviceInformation;
+      console.log(deviceInformation);
     },
     receiveDeviceConfig: function(deviceConfig) {
       this.deviceConfig = deviceConfig;
+      console.log(deviceConfig);
     },
     receiveWifiConfig: function(config) {
       this.config.wifi = config;
@@ -73,8 +74,8 @@ export default {
       this.config.name = config.name;
       this.config.ota = { enabled: config.ota };
       if (config["device_id"]) this.config["device_id"] = config["device_id"];
-      if (Object.keys(config.settings).length !== 0)
-        this.config.settings = config.settings;
+      if (Object.keys(config.settings).length !== 0) this.config.settings = config.settings;
+      console.log(config);
     }
   },
   components: {
