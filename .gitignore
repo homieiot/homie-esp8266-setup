@@ -15,4 +15,3 @@ yarn-error.log*
 
 /npm-debug.log
 /ui_bundle
-/ui_bundle.gz
