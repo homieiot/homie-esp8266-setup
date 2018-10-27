@@ -30,7 +30,7 @@
         <label class="label" for="wifi_password">Wi-Fi password</label>
         <p class="control is-grouped">
           <!-- v-model does not support dynamic :type -->
-          <input v-if="passwordClearText" type="text" class="input" v-model.trim="password" id="wifi_password" placeholder="Password" maxLength="64" />
+          <input v-if="passwordClearText" type="text" class="input" autocapitalize="none" v-model.trim="password" id="wifi_password" placeholder="Password" maxLength="64" />
           <input v-else type="password" class="input" v-model.trim="password" id="wifi_password" placeholder="Password" maxLength="64" />
           <label class="checkbox">
             <input type="checkbox" v-model="passwordClearText" /> Show password
