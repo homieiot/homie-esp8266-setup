@@ -39,7 +39,7 @@
         <label class="label" for="mqtt_password">MQTT password</label>
         <p class="control is-grouped">
           <!-- v-model does not support dynamic :type -->
-          <input v-if="passwordClearText" type="text" class="input" v-model.trim="password" id="mqtt_password" placeholder="Password" />
+          <input v-if="passwordClearText" type="text" class="input" autocapitalize="none" v-model.trim="password" id="mqtt_password" placeholder="Password" />
           <input v-else type="password" class="input" v-model.trim="password" id="mqtt_password" placeholder="Password" />
           <label class="checkbox">
             <input type="checkbox" v-model="passwordClearText" /> Show password
