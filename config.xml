@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns = "http://www.w3.org/ns/widgets"
+xmlns:gap = "http://phonegap.com/ns/1.0"
+id = "fr.marvinroger.homie-esp8266"
+versionCode = "2"
+version = "2.0.0" >
+
+  <name>Homie setup</name>
+
+  <description>Set up your Homie for ESP8266 device</description>
+
+  <preference name="phonegap-version" value="cli-6.3.0" />
+
+  <platform name="android" />
+  <platform name="winphone" />
+
+  <icon src="public/img/logo.png" />
+  <splash src="public/img/logo.png" />
+
+  <plugin name="cordova-plugin-whitelist" spec="^1.0.0" />
+  <plugin name="cordova-plugin-crosswalk-webview" spec="^2.0.0" />
+
+  <access origin="http://192.168.123.1" />
+</widget>
