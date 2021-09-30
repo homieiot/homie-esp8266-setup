@@ -1,7 +1,7 @@
 <template>
   <span>
-    <h1 class="title">Homie for ESP8266</h1>
-    <h2 class="subtitle">Set up your device.</h2>
+    <h1 class="title">{{ title }}</h1>
+    <h2 class="subtitle">{{ subtitle }}</h2>
     <progress-bar :current-step="currentStep" />
     <div class="content">
       <connection-step @done="goToNextStep" @loading="setLoading" @loaded="stopLoading" v-if="currentStep === 1" />
@@ -35,7 +35,9 @@ export default {
       loadingText: '',
       currentStep: 1,
       deviceInformation: {},
-      config: {}
+      config: {},
+      title: process.env.TITLE,
+      subtitle: process.env.SUBTITLE,
     }
   },
   methods: {
