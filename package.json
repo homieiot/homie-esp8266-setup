@@ -24,10 +24,10 @@
   "homepage": "https://github.com/marvinroger/homie-esp8266-configurator",
   "license": "GPL-2.0",
   "devDependencies": {
-    "axios": "^0.16.1",
-    "inliner": "^1.12.2",
-    "node-zopfli": "^2.0.2",
-    "poi": "^8.1.1",
-    "replace-in-file": "^3.0.0-beta.2"
+    "axios": "^0.21.4",
+    "inliner": "^1.13.1",
+    "node-zopfli": "^2.1.4",
+    "poi": "^9.0.0",
+    "replace-in-file": "^6.2.0"
   }
 }
