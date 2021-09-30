@@ -6,8 +6,7 @@
         Please use the following link to setup your device: <br/> <a v-bind:href="httpUrl"> {{ httpUrl }}</a>
       </div>
     </span>
-    Connect to your device Wi-Fi AP. It should be named something like <strong>Homie-123456abcdef</strong>.
-    Note this configurator is only for Homie for ESP8266 v2. The v1 configurator is available <a href="https://github.com/marvinroger/homie-esp8266/releases/download/v1.5.0/homie-esp8266-v1-setup.zip">here</a>.
+    <span v-html="description"></span>
   </p>
 </template>
 
@@ -20,7 +19,8 @@ export default {
     return {
       requestOnGoing: false,
       interval: null,
-      httpUrl: this.getHttpUrl()
+      httpUrl: this.getHttpUrl(),
+      description: process.env.DESCRIPTION,
     }
   },
   mounted () {
